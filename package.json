@@ -4,7 +4,8 @@
   "description": "PCAT Photo App",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
   "keywords": [
     "photo",
@@ -13,6 +14,10 @@
   "author": "Samet CANER",
   "license": "ISC",
   "devDependencies": {
+    "nodemon": "^3.0.2",
     "prettier": "3.1.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
   }
 }
