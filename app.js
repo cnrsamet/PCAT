@@ -10,8 +10,8 @@ const app = express();
 
 //Connect Database
 mongoose.connect('mongodb://localhost/pcat-test-db', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+  //useNewUrlParser: true,
+  //useUnifiedTopology: true,
 });
 
 //TEMPLATE ENGINE
@@ -39,6 +39,13 @@ app.get('/add', (req, res) => {
 app.post('/photos', async (req, res) => {
   await Photo.create(req.body);
   res.redirect('/');
+});
+//Single Photo Page
+app.get('/photos/:id', async (req, res) => {
+  const photo = await Photo.findById(req.params.id);
+  res.render('photo', {
+    photo
+  });
 });
 
 const port = 3000;
