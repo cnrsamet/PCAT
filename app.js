@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
+const methodOverride = require('method-override');
 
 const path = require('path');
 const ejs = require('ejs');
@@ -24,6 +25,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true })); //req.body > html catch
 app.use(express.json()); //read with json > res.redirect('/');
 app.use(fileUpload()); // Saved as fileupload middlewares.
+app.use(methodOverride('_method')); // POST ->>> PUT
 
 //ROUTES
 app.get('/', async (req, res) => {
@@ -37,6 +39,13 @@ app.get('/about', (req, res) => {
 });
 app.get('/add', (req, res) => {
   res.render('add');
+});
+//Edit Rout
+app.get('/photos/edit/:id', async (req, res) => {
+  const photo = await Photo.findOne({ _id: req.params.id });
+  res.render('edit', {
+    photo,
+  });
 });
 
 //POST
@@ -65,6 +74,15 @@ app.get('/photos/:id', async (req, res) => {
   res.render('photo', {
     photo,
   });
+});
+//Edit Photo Page
+app.put('/photos/:id', async (req, res) => {
+  const photo = await Photo.findOne({ _id: req.params.id });
+  photo.title = req.body.title;
+  photo.description = req.body.description;
+  photo.save();
+
+  res.redirect(`/photos/${req.params.id}`);
 });
 
 const port = 3000;
