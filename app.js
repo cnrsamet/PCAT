@@ -15,6 +15,7 @@ const app = express();
 mongoose.connect('mongodb://localhost/pcat-test-db', {
   //useNewUrlParser: true,
   //useUnifiedTopology: true,
+  //useFindAndModify: false
 });
 
 //TEMPLATE ENGINE
@@ -25,7 +26,11 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true })); //req.body > html catch
 app.use(express.json()); //read with json > res.redirect('/');
 app.use(fileUpload()); // Saved as fileupload middlewares.
-app.use(methodOverride('_method')); // POST ->>> PUT
+app.use(
+  methodOverride('_method', {
+    methods: ['POST', 'GET'],
+  })
+); // POST ->>> PUT, GET ->>> DELETE
 
 //ROUTES
 app.get('/', async (req, res) => {
@@ -83,6 +88,14 @@ app.put('/photos/:id', async (req, res) => {
   photo.save();
 
   res.redirect(`/photos/${req.params.id}`);
+});
+//Delete Photo
+app.delete('/photos/:id', async (req, res) => {
+  const photo = await Photo.findOne({ _id: req.params.id });
+  let deletedImage = __dirname + '/public' + photo.image;
+  fs.unlinkSync(deletedImage);
+  await Photo.findByIdAndDelete(req.params.id);
+  res.redirect('/');
 });
 
 const port = 3000;
