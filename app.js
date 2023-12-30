@@ -11,6 +11,7 @@ const pageController = require('./controllers/pageController');
 const app = express();
 
 //Connect Database
+/*
 mongoose.connect('mongodb+srv://samettcaner:rhtnCKAqSZ9leMPu@cluster0.tuxac5i.mongodb.net/pcat-db?retryWrites=true&w=majority', {
   //useNewUrlParser: true,
   //useUnifiedTopology: true,
@@ -19,6 +20,11 @@ mongoose.connect('mongodb+srv://samettcaner:rhtnCKAqSZ9leMPu@cluster0.tuxac5i.mo
   console.log('DB CONNECTED!');
 }).catch((err) => { 
   console.log(err);
+}); */
+mongoose.connect('mongodb://localhost/pcat-test-db', {
+  //useNewUrlParser: true,
+  //useUnifiedTopology: true,
+  //useFindAndModify: false
 });
 
 //TEMPLATE ENGINE
@@ -51,7 +57,8 @@ app.get('/add', pageController.getAddPage);
 //Edit Rout
 app.get('/photos/edit/:id', pageController.getEditPage);
 
-const port = process.env.PORT || 5000;
+//const port = process.env.PORT || 5000;
+const port = 3000;
 app.listen(port, () => {
   console.log(`Sunucu ${port} Portunda Başlatildi.`);
 });
