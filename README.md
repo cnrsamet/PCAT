@@ -8,7 +8,7 @@ Used in
 -express.js
 -MongoDB
 -Nodemon,ejs,prettier
----------------------------------------------------
+
 PCAT Projesi, Websitenize Fotoğraf yükleyebildiğiniz, bu fotoğrafları güncelleyebildiğiniz ve silebildiğiniz bir backend projesidir.
 Frontend tarafında hazır tema kullanılmıştır. 
 Kullanılanlar: 
